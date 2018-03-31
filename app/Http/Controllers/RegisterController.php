@@ -14,7 +14,7 @@ class RegisterController extends Controller
      *
      * @param \App\Http\Requests\RegisterUserRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\UserResource
      */
     public function store(RegisterUserRequest $request)
     {
