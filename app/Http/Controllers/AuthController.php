@@ -49,7 +49,7 @@ class AuthController extends Controller
     /**
      * Revoke a Users token - invalidate the token.
      * A User must be authenticated to access this route - provide their bearer token.
-     * A null, http no contant (204) response is returned on a successful invalidation.
+     * A null, http no content (204) response is returned on a successful invalidation.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
