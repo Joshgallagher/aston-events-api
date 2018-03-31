@@ -13,7 +13,18 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('user_id');
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('description');
+            $table->string('location');
+            $table->date('date');
+            $table->time('time');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
