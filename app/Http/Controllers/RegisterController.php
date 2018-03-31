@@ -16,7 +16,7 @@ class RegisterController extends Controller
      *
      * @return \App\Http\Resources\UserResource
      */
-    public function store(RegisterUserRequest $request)
+    public function store(RegisterUserRequest $request): UserResource
     {
         $user = User::create([
             'name' => request('name'),
