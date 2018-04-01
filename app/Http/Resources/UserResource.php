@@ -8,13 +8,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class UserResource extends JsonResource
 {
     /**
-     * Converts the given contact number to a valid GB phone number.
-     *
-     *  @var string
-     */
-    const PHONE_COUNTRY_CODE = 'GB';
-
-    /**
      * Transform the resource into an array.
      *
      * @param \Illuminate\Http\Request $request
@@ -26,7 +19,17 @@ class UserResource extends JsonResource
         return [
             'name' => (string) $this->name,
             'email' => (string) $this->email,
-            'contact_number' => (string) PhoneNumber::make($this->contact_number, self::PHONE_COUNTRY_CODE),
+            'contact_number' => $this->when($this->contact_number, $this->formatContactNumber()),
         ];
+    }
+
+    /**
+     * Format the given contact number to the GB standard.
+     *
+     * @return \Propaganistas\LaravelPhone\PhoneNumber
+     */
+    protected function formatContactNumber()
+    {
+        return PhoneNumber::make($this->contact_number, 'GB');
     }
 }
