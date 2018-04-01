@@ -22,6 +22,10 @@ Route::prefix('v1')->group(function () {
         Route::post('/token/revoke', 'AuthController@revokeToken')->middleware('auth:api');
     });
 
+    Route::prefix('events')->group(function () {
+        Route::get('/', 'EventController@index');
+    });
+
     Route::middleware('auth:api')->get('/user', function (Request $request) {
         return new UserResource($request->user());
     });
