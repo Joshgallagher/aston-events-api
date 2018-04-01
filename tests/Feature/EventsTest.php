@@ -23,4 +23,18 @@ class EventsTest extends TestCase
             ])
             ->assertStatus(Response::HTTP_OK);
     }
+
+    /** @test */
+    public function a_user_can_view_a_specific_event()
+    {
+        factory('App\Models\User')->create();
+        factory('App\Models\Category')->create();
+        $event = factory('App\Models\Event')->create();
+
+        $response = $this->getJson('api/v1/events/'.$event->id)
+            ->assertJsonFragment([
+                'name' => $event->name,
+            ])
+            ->assertStatus(Response::HTTP_OK);
+    }
 }

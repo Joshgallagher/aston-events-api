@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('events')->group(function () {
         Route::get('/', 'EventController@index');
+        Route::get('/{event}', 'EventController@show');
     });
 
     Route::middleware('auth:api')->get('/user', function (Request $request) {

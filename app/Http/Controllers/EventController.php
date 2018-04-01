@@ -32,12 +32,13 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param \App\Models\Event $event
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\EventResource
      */
-    public function show($id)
+    public function show(Event $event)
     {
+        return new EventResource($event);
     }
 
     /**
