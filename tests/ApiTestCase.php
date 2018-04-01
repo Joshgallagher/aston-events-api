@@ -8,6 +8,26 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableUser;
 abstract class ApiTestCase extends TestCase
 {
     /**
+     * Request headers.
+     *
+     * @var array
+     */
+    protected $headers = [
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+    ];
+
+    /**
+     * Get the request headers.
+     *
+     * @return array
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    /**
      * Creates an Authorization header and assigns a valid JWT token
      * generated from the given User.
      *
@@ -22,8 +42,6 @@ abstract class ApiTestCase extends TestCase
 
         JWTAuth::setToken($accessToken);
 
-        return [
-            'Authorization' => 'Bearer '.$accessToken,
-        ];
+        return array_merge($this->getHeaders(), ['Authorization' => 'Bearer '.$accessToken]);
     }
 }
