@@ -16,7 +16,7 @@ class CreateEventsTable extends Migration
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('user_id');
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->nullable();
             $table->text('description');
             $table->string('location');
             $table->date('date');

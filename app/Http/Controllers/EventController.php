@@ -27,6 +27,17 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $event = Event::create([
+            'category_id' => request('category_id'),
+            'user_id' => auth()->id(),
+            'name' => request('name'),
+            'description' => request('description'),
+            'location' => request('location'),
+            'date' => request('date'),
+            'time' => request('time'),
+        ]);
+
+        return new EventResource($event->load('organiser'));
     }
 
     /**

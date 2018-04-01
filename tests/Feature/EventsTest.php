@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use Tests\ApiTestCase;
 use Illuminate\Http\Response;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class EventsTest extends TestCase
+class EventsTest extends ApiTestCase
 {
     use DatabaseMigrations;
 
@@ -48,6 +48,43 @@ class EventsTest extends TestCase
         $response = $this->getJson('api/v1/events/'.$event->id)
             ->assertJsonFragment([
                 'name' => $organiser->name,
+            ])
+            ->assertStatus(Response::HTTP_OK);
+    }
+
+    /** @test */
+    public function guests_may_not_create_events()
+    {
+        factory('App\Models\User')->create();
+        factory('App\Models\Category')->create();
+        $event = factory('App\Models\Event')->make();
+
+        $this->postJson('api/v1/events', $event->toArray(), $this->getHeaders())
+            ->assertJsonFragment([
+                'message' => 'Unauthenticated.',
+            ])
+            ->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    /** @test */
+    public function an_authenticated_organiser_can_create_an_event()
+    {
+        $organiser = factory('App\Models\User')->create();
+        factory('App\Models\Category')->create();
+        $event = factory('App\Models\Event')->make();
+
+        $headers = $this->createAuthHeader($organiser);
+
+        $this->postJson('api/v1/events', $event->toArray(), $headers)
+            ->assertStatus(Response::HTTP_CREATED);
+
+        $this->getJson('api/v1/events/'.$event->id)
+            ->assertJsonFragment([
+                'name' => $event->name,
+                'description' => $event->description,
+                'location' => $event->location,
+                'event_date' => $event->date,
+                'event_time' => $event->time,
             ])
             ->assertStatus(Response::HTTP_OK);
     }
