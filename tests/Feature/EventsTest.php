@@ -13,9 +13,9 @@ class EventsTest extends ApiTestCase
     /** @test */
     public function a_user_can_view_all_events()
     {
-        factory('App\Models\User', 15)->create();
-        factory('App\Models\Category', 5)->create();
-        $events = factory('App\Models\Event', 25)->create();
+        create('User', [], 15);
+        create('Category', [], 5);
+        $events = create('Event', [], 25);
 
         $response = $this->getJson('api/v1/events')
             ->assertJsonFragment([
@@ -27,9 +27,9 @@ class EventsTest extends ApiTestCase
     /** @test */
     public function a_user_can_view_a_specific_event()
     {
-        factory('App\Models\User')->create();
-        factory('App\Models\Category')->create();
-        $event = factory('App\Models\Event')->create();
+        create('User');
+        create('Category');
+        $event = create('Event');
 
         $response = $this->getJson('api/v1/events/'.$event->id)
             ->assertJsonFragment([
@@ -41,9 +41,9 @@ class EventsTest extends ApiTestCase
     /** @test */
     public function a_specific_event_shows_its_organisers_details()
     {
-        $organiser = factory('App\Models\User')->create();
-        factory('App\Models\Category')->create();
-        $event = factory('App\Models\Event')->create();
+        $organiser = create('User');
+        create('Category');
+        $event = create('Event');
 
         $response = $this->getJson('api/v1/events/'.$event->id)
             ->assertJsonFragment([
@@ -55,9 +55,9 @@ class EventsTest extends ApiTestCase
     /** @test */
     public function guests_may_not_create_events()
     {
-        factory('App\Models\User')->create();
-        factory('App\Models\Category')->create();
-        $event = factory('App\Models\Event')->make();
+        create('User');
+        create('Category');
+        $event = make('Event');
 
         $this->postJson('api/v1/events', $event->toArray(), $this->getHeaders())
             ->assertJsonFragment([
@@ -69,9 +69,9 @@ class EventsTest extends ApiTestCase
     /** @test */
     public function an_authenticated_organiser_can_create_an_event()
     {
-        $organiser = factory('App\Models\User')->create();
-        factory('App\Models\Category')->create();
-        $event = factory('App\Models\Event')->make();
+        $organiser = create('User');
+        create('Category');
+        $event = make('Event');
 
         $headers = $this->createAuthHeader($organiser);
 

@@ -12,9 +12,9 @@ class EventTest extends TestCase
     /** @test */
     public function it_has_an_organiser()
     {
-        factory('App\Models\User')->create();
-        factory('App\Models\Category')->create();
-        $event = factory('App\Models\Event')->create();
+        create('User');
+        create('Category');
+        $event = create('Event');
 
         $this->assertInstanceOf('App\Models\User', $event->organiser);
     }
