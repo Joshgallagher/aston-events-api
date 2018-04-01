@@ -12,4 +12,14 @@ class Event extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * An Event belongs to an Organiser (User).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organiser()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

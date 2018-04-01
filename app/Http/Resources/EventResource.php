@@ -22,6 +22,7 @@ class EventResource extends JsonResource
             'location' => (string) $this->location,
             'event_date' => (string) $this->date,
             'event_time' => (string) $this->time,
+            'organiser' => new UserResource($this->whenLoaded('organiser')),
         ];
     }
 }

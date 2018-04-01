@@ -37,4 +37,18 @@ class EventsTest extends TestCase
             ])
             ->assertStatus(Response::HTTP_OK);
     }
+
+    /** @test */
+    public function a_specific_event_shows_its_organisers_details()
+    {
+        $organiser = factory('App\Models\User')->create();
+        factory('App\Models\Category')->create();
+        $event = factory('App\Models\Event')->create();
+
+        $response = $this->getJson('api/v1/events/'.$event->id)
+            ->assertJsonFragment([
+                'name' => $organiser->name,
+            ])
+            ->assertStatus(Response::HTTP_OK);
+    }
 }
