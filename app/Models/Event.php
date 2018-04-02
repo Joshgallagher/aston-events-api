@@ -50,11 +50,12 @@ class Event extends Model
      *
      * @param string $value
      */
-    public function setSlugAttribute(string $value): void
+    public function setSlugAttribute(string $value)
     {
         if (static::whereSlug($slug = str_slug($value))->exists()) {
             $slug = "{$slug}-{$this->id}";
         }
+
         $this->attributes['slug'] = $slug;
     }
 }
