@@ -28,4 +28,22 @@ class EventTest extends TestCase
 
         $this->assertInstanceOf('App\Models\Category', $event->category);
     }
+
+    /** @test */
+    public function an_event_appends_an_ID_onto_a_duplicate_slug()
+    {
+        create('User');
+        create('Category');
+        $event = create('Event', [
+            'name' => 'American Football Team',
+        ]);
+        $duplicateEvent = create('Event', [
+            'name' => 'American Football Team',
+        ]);
+
+        $this->assertDatabaseHas('events', [
+            'slug' => 'american-football-team',
+            'slug' => 'american-football-team-2',
+        ]);
+    }
 }
