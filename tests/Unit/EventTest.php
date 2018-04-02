@@ -18,4 +18,14 @@ class EventTest extends TestCase
 
         $this->assertInstanceOf('App\Models\User', $event->organiser);
     }
+
+    /** @test */
+    public function it_belongs_to_a_category()
+    {
+        create('User');
+        create('Category');
+        $event = create('Event');
+
+        $this->assertInstanceOf('App\Models\Category', $event->category);
+    }
 }
