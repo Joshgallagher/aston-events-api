@@ -15,7 +15,9 @@ class EventController extends Controller
      */
     public function index()
     {
-        return EventResource::collection(Event::latest()->paginate(10));
+        $events = Event::with('category')->latest()->paginate(10);
+
+        return EventResource::collection($events);
     }
 
     /**
@@ -37,7 +39,7 @@ class EventController extends Controller
             'time' => request('time'),
         ]);
 
-        return new EventResource($event->load('organiser'));
+        return new EventResource($event->load('organiser', 'category'));
     }
 
     /**
@@ -49,7 +51,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return new EventResource($event->load('organiser'));
+        return new EventResource($event->load('organiser', 'category'));
     }
 
     /**

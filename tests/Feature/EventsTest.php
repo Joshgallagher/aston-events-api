@@ -39,20 +39,6 @@ class EventsTest extends ApiTestCase
     }
 
     /** @test */
-    public function a_specific_event_shows_its_organisers_details()
-    {
-        $organiser = create('User');
-        create('Category');
-        $event = create('Event');
-
-        $response = $this->getJson('api/v1/events/'.$event->id)
-            ->assertJsonFragment([
-                'name' => $organiser->name,
-            ])
-            ->assertStatus(Response::HTTP_OK);
-    }
-
-    /** @test */
     public function guests_may_not_create_events()
     {
         create('User');
