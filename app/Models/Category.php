@@ -19,4 +19,24 @@ class Category extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Get the route key name for Laravel.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
+     * A Category has many associated Events.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

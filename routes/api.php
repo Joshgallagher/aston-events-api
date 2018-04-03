@@ -23,6 +23,7 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('categories')->group(function () {
         Route::get('/', 'CategoryController@index');
+        Route::get('/{category}', 'CategoryEventController@index');
     });
 
     Route::prefix('events')->group(function () {
