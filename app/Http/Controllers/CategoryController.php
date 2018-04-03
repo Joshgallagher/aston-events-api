@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Category resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\CategoryResource
      */
     public function index()
     {
+        return CategoryResource::collection(Category::get());
     }
 
     /**

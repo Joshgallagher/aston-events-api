@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 
 /*
@@ -22,13 +21,17 @@ Route::prefix('v1')->group(function () {
         Route::post('/token/revoke', 'AuthController@revokeToken')->middleware('auth:api');
     });
 
+    Route::prefix('categories')->group(function () {
+        Route::get('/', 'CategoryController@index');
+    });
+
     Route::prefix('events')->group(function () {
         Route::get('/', 'EventController@index');
         Route::post('/', 'EventController@store')->middleware('auth:api');
         Route::get('/{event}', 'EventController@show');
     });
 
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return new UserResource($request->user());
+    Route::middleware('auth:api')->get('/user', function () {
+        return new UserResource(auth()->user());
     });
 });
