@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Filters\EventFilters;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Event extends Model
 {
@@ -43,6 +45,19 @@ class Event extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Apply all relevant Event filters.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \App\Filters\EventFilters             $filters
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter(Builder $query, EventFilters $filters): Builder
+    {
+        return $filters->apply($query);
     }
 
     /**

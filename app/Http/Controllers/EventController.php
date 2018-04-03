@@ -4,18 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Filters\EventFilters;
 use App\Http\Resources\EventResource;
 
 class EventController extends Controller
 {
     /**
-     * Display a listing of the Event resource.
+     * Display a listing of the Event resource. Optionally, a User can
+     * filter the listing through query params.
+     *
+     * @param \App\Filters\EventFilters $filters
      *
      * @return \App\Http\Resources\EventResource
      */
-    public function index()
+    public function index(EventFilters $filters)
     {
-        $events = Event::with('category')->latest()->paginate(10);
+        $events = Event::with('category', 'organiser')
+            ->latest()
+            ->filter($filters)
+            ->paginate(10);
 
         return EventResource::collection($events);
     }

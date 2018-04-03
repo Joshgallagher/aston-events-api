@@ -92,4 +92,26 @@ class EventsTest extends ApiTestCase
             ])
             ->assertStatus(Response::HTTP_OK);
     }
+
+    /** @test */
+    public function an_authenticated_organiser_can_see_their_created_events()
+    {
+        $authOrganiser = create('User');
+        create('Category');
+        $eventByAuthOrganiser = create('Event', ['user_id' => $authOrganiser->id]);
+        $eventNotByAuthOrganiser = create('Event', ['user_id' => create('User')->id]);
+
+        $headers = $this->createAuthHeader($authOrganiser);
+
+        $this->getJson('api/v1/events?my=1', $headers)
+            ->assertJsonFragment([
+                'name' => $eventByAuthOrganiser->name,
+                'name' => $authOrganiser->name,
+            ])
+            ->assertJsonMissingExact([
+                'name' => $eventNotByAuthOrganiser->name,
+                'name' => $eventNotByAuthOrganiser->organiser->name,
+            ])
+            ->assertStatus(Response::HTTP_OK);
+    }
 }
