@@ -19,7 +19,7 @@ class EventFilters extends AbstractFilters
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function my(): Builder
+    protected function my(): Builder
     {
         return $this->builder->where('user_id', auth()->id());
     }
