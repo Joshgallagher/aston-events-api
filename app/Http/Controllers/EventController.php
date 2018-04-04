@@ -37,6 +37,8 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Event::class);
+
         $event = Event::create([
             'category_id' => request('category_id'),
             'user_id' => auth()->id(),

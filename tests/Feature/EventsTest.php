@@ -46,14 +46,13 @@ class EventsTest extends ApiTestCase
         $event = make('Event');
 
         $this->postJson('api/v1/events', $event->toArray(), $this->getHeaders())
-            ->assertJsonFragment([
-                'message' => 'Unauthenticated.',
-            ])
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
+
+        $this->assertDatabaseMissing('events', $event->toArray());
     }
 
     /** @test */
-    public function an_authenticated_organiser_can_create_an_event()
+    public function organisers_without_a_contact_number_can_not_create_events()
     {
         $organiser = create('User');
         create('Category');
@@ -62,17 +61,26 @@ class EventsTest extends ApiTestCase
         $headers = $this->createAuthHeader($organiser);
 
         $this->postJson('api/v1/events', $event->toArray(), $headers)
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->assertDatabaseMissing('events', $event->toArray());
+    }
+
+    /** @test */
+    public function organisers_must_have_a_contact_number_to_create_events()
+    {
+        $organiser = create('User', [
+            'contact_number' => '07387074668',
+        ]);
+        create('Category');
+        $event = make('Event');
+
+        $headers = $this->createAuthHeader($organiser);
+
+        $this->postJson('api/v1/events', $event->toArray(), $headers)
             ->assertStatus(Response::HTTP_CREATED);
 
-        $this->getJson('api/v1/events/'.$event->id)
-            ->assertJsonFragment([
-                'name' => $event->name,
-                'description' => $event->description,
-                'location' => $event->location,
-                'event_date' => $event->date,
-                'event_time' => $event->time,
-            ])
-            ->assertStatus(Response::HTTP_OK);
+        $this->assertDatabaseHas('events', $event->toArray());
     }
 
     /** @test */
