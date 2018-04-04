@@ -114,4 +114,26 @@ class EventsTest extends ApiTestCase
             ])
             ->assertStatus(Response::HTTP_OK);
     }
+
+    /** @test */
+    public function users_can_filter_events_by_their_date()
+    {
+        $today = \Carbon\Carbon::today();
+
+        create('User');
+        create('Category');
+        $firstEventToday = create('Event', ['date' => $today->format('Y-m-d')]);
+        $secondEventToday = create('Event', ['date' => $today->addHour(1)->format('Y-m-d')]);
+        $eventTomorrow = create('Event', ['date' => \Carbon\Carbon::tomorrow()->format('Y-m-d')]);
+
+        $this->getJson('api/v1/events?today=1')
+            ->assertJsonFragment([
+                'name' => $firstEventToday->name,
+                'name' => $secondEventToday->name,
+            ])
+            ->assertJsonMissingExact([
+                'name' => $eventTomorrow->name,
+            ])
+            ->assertStatus(Response::HTTP_OK);
+    }
 }

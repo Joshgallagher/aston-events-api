@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 class EventFilters extends AbstractFilters
@@ -11,16 +12,25 @@ class EventFilters extends AbstractFilters
      *
      * @var array
      */
-    protected $filters = ['my'];
+    protected $filters = ['my', 'today'];
 
     /**
-     * Filter the query to only return the currently
-     * authenticated User's created Events.
+     * Return the authenticated users created Events.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function my(): Builder
     {
         return $this->builder->where('user_id', auth()->id());
+    }
+
+    /**
+     * Return all Events taking place today.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function today(): Builder
+    {
+        return $this->builder->where('date', Carbon::today()->format('Y-m-d'));
     }
 }
