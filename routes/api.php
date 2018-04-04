@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/', 'EventController@index');
         Route::post('/', 'EventController@store')->middleware('auth:api');
         Route::get('/{event}', 'EventController@show');
+        Route::delete('/{event}', 'EventController@destroy')->middleware('auth:api');
     });
 
     Route::middleware('auth:api')->get('/user', function () {

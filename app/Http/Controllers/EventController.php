@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Filters\EventFilter;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Resources\EventResource;
 
 class EventController extends Controller
@@ -76,11 +77,16 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param \App\Models\Event $event
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
+        $this->authorize('delete', $event);
+
+        $event->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
