@@ -4,7 +4,7 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
-trait HasFiltersTrait
+trait HasFilterTrait
 {
     /**
      * Apply all relevant filters to the given Model.
@@ -14,7 +14,7 @@ trait HasFiltersTrait
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFilter(Builder $query, AbstractFilters $filters): Builder
+    public function scopeFilter(Builder $query, AbstractFilter $filters): Builder
     {
         return $filters->apply($query);
     }

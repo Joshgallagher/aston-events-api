@@ -5,7 +5,7 @@ namespace App\Filters;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 
-abstract class AbstractFilters
+abstract class AbstractFilter
 {
     /**
      * Request object.

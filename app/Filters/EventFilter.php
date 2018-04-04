@@ -5,7 +5,7 @@ namespace App\Filters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
-class EventFilters extends AbstractFilters
+class EventFilter extends AbstractFilter
 {
     /**
      * Available Event filters.

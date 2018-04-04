@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Filters\HasFiltersTrait;
+use App\Filters\HasFilterTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    use HasFiltersTrait;
+    use HasFilterTrait;
     /**
      * The attributes that aren't mass assignable.
      *
