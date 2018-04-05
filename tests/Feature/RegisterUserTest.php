@@ -13,7 +13,9 @@ class RegisterUserTest extends ApiTestCase
     /** @test */
     public function a_user_can_register()
     {
-        $user = make('User');
+        $user = make('User', [
+            'email' => 'josh@aston.ac.uk',
+        ]);
 
         $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
             ->assertStatus(Response::HTTP_CREATED);
@@ -22,23 +24,34 @@ class RegisterUserTest extends ApiTestCase
     }
 
     /** @test */
-    public function all_fields_are_required_to_register()
+    public function the_user_can_only_register_with_an_aston_email()
     {
-        $user = make('User');
+        $user = make('User', [
+            'email' => 'josh@gmail.com',
+        ]);
 
-        $this->postJson('api/v1/register', $user->toArray())
+        $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
             ->assertJsonFragment([
-                'password' => [
-                    'The password field is required.',
+                'email' => [
+                    'This is not a valid Aston University email.',
                 ],
             ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $user = make('User', [
+            'email' => 'josh@aston.ac.uk',
+        ]);
+
+        $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
+            ->assertStatus(Response::HTTP_CREATED);
     }
 
     /** @test */
     public function a_user_recieves_a_valid_access_token_after_registration()
     {
-        $user = make('User');
+        $user = make('User', [
+            'email' => 'josh@aston.ac.uk',
+        ]);
 
         $response = $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
             ->assertStatus(Response::HTTP_CREATED);

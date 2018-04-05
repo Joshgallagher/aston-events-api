@@ -25,7 +25,7 @@ class RegisterUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|regex:^[A-Za-z0-9._%+-]+@aston.ac.uk$^|max:255|unique:users',
             'password' => 'required|string|min:6',
         ];
     }
@@ -38,7 +38,7 @@ class RegisterUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'contact_number.phone' => 'The :attribute provided is invalid.',
+            'email.regex' => 'This is not a valid Aston University email.',
         ];
     }
 }
