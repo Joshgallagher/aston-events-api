@@ -7,6 +7,7 @@ use App\Filters\EventFilter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources\EventResource;
+use App\Http\Requests\StoreEventRequest;
 
 class EventController extends Controller
 {
@@ -29,13 +30,13 @@ class EventController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Event resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StoreEventRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEventRequest $request)
     {
         $this->authorize('create', Event::class);
 
