@@ -36,14 +36,15 @@ class RegisterUserTest extends ApiTestCase
     }
 
     /** @test */
-    public function a_user_recieves_a_valid_token_after_registration()
+    public function a_user_recieves_a_valid_access_token_after_registration()
     {
         $user = make('User');
 
         $response = $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
             ->assertStatus(Response::HTTP_CREATED);
 
-        $headers = array_merge($this->getHeaders(), ['Authorization' => $response->getData()->meta->access_token]);
+        $accessToken = $response->getData()->meta->access_token;
+        $headers = array_merge($this->getHeaders(), ['Authorization' => $accessToken]);
 
         $this->getJson('api/v1/user', $headers)
             ->assertJsonFragment([
