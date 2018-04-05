@@ -11,7 +11,7 @@ class RegisterUserTest extends ApiTestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function a_user_can_register()
+    public function a_user_can_register_only_with_an_aston_email()
     {
         $user = make('User', [
             'email' => 'josh@aston.ac.uk',
