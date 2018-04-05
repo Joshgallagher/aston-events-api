@@ -4,7 +4,7 @@ namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
-trait HasFilterTrait
+trait IsFilterableTrait
 {
     /**
      * Apply all relevant filters to the given Model.
