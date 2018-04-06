@@ -10,7 +10,7 @@ class EventTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function it_has_an_organiser()
+    public function events_belong_to_an_organiser()
     {
         create('User');
         create('Category');
@@ -20,7 +20,7 @@ class EventTest extends TestCase
     }
 
     /** @test */
-    public function it_belongs_to_a_category()
+    public function events_belong_to_categories()
     {
         create('User');
         create('Category');
@@ -30,7 +30,7 @@ class EventTest extends TestCase
     }
 
     /** @test */
-    public function an_event_appends_an_ID_onto_a_duplicate_slug()
+    public function an_events_slug_is_always_unique()
     {
         create('User');
         create('Category');

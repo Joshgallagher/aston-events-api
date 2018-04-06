@@ -11,7 +11,7 @@ class RegisterUserTest extends ApiTestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function a_user_can_register_only_with_an_aston_email()
+    public function users_need_an_aston_email_to_register()
     {
         $user = make('User', [
             'email' => 'josh@aston.ac.uk',
@@ -24,7 +24,7 @@ class RegisterUserTest extends ApiTestCase
     }
 
     /** @test */
-    public function the_user_can_only_register_with_an_aston_email()
+    public function users_without_an_aston_email_can_not_register()
     {
         $user = make('User', [
             'email' => 'josh@gmail.com',
@@ -47,7 +47,7 @@ class RegisterUserTest extends ApiTestCase
     }
 
     /** @test */
-    public function a_user_recieves_a_valid_access_token_after_registration()
+    public function upon_successful_registration_a_valid_token_is_returned()
     {
         $user = make('User', [
             'email' => 'josh@aston.ac.uk',
