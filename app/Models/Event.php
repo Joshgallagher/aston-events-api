@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\IsFilterableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
 {
@@ -18,7 +19,7 @@ class Event extends Model
     /**
      * Boot the model.
      */
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
 
@@ -42,7 +43,7 @@ class Event extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function organiser()
+    public function organiser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -52,7 +53,7 @@ class Event extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
@@ -62,7 +63,7 @@ class Event extends Model
      *
      * @param string $value
      */
-    public function setSlugAttribute(string $value)
+    public function setSlugAttribute(string $value): void
     {
         if (static::whereSlug($slug = str_slug($value))->exists()) {
             $slug = "{$slug}-{$this->id}";
