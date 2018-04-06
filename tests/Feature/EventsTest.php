@@ -39,24 +39,6 @@ class EventsTest extends ApiTestCase
     }
 
     /** @test */
-    public function a_user_can_filter_events_according_to_its_category()
-    {
-        create('User');
-        $category = create('Category');
-        $eventInCategory = create('Event', ['category_id' => $category->id]);
-        $eventNotInCategory = create('Event', ['category_id' => create('Category')->id]);
-
-        $this->getJson('api/v1/categories/'.$category->slug)
-            ->assertJsonFragment([
-                'name' => $eventInCategory->name,
-            ])
-            ->assertJsonMissingExact([
-                'name' => $eventNotInCategory->name,
-            ])
-            ->assertStatus(Response::HTTP_OK);
-    }
-
-    /** @test */
     public function an_authenticated_organiser_can_see_their_created_events()
     {
         $authOrganiser = create('User');
