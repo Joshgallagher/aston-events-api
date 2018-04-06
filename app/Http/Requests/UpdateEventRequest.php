@@ -24,6 +24,7 @@ class UpdateEventRequest extends FormRequest
     public function rules()
     {
         return [
+            'related_event_id' => 'nullable|exists:events,id|numeric',
             'name' => 'max:100|string',
             'description' => 'max:255|string',
             'location' => 'max:100|string',

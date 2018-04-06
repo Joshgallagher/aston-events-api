@@ -54,15 +54,18 @@ class UpdateEventsTest extends ApiTestCase
         $authOrganiser = create('User');
         create('Category');
         $event = create('Event');
+        $relatedEvent = create('Event');
 
         $headers = $this->createAuthHeader($authOrganiser);
 
         $this->patchJson('api/v1/events/'.$event->slug, [
+            'related_event_id' => $relatedEvent->id,
             'name' => 'I patched the name.',
             'description' => 'I patched the description.',
         ], $headers)->assertStatus(Response::HTTP_NO_CONTENT);
 
-        tap($event->fresh(), function ($event) {
+        tap($event->fresh(), function ($event) use ($relatedEvent) {
+            $this->assertEquals($relatedEvent->id, $event->related_event_id);
             $this->assertEquals('I patched the name.', $event->name);
             $this->assertEquals('I patched the description.', $event->description);
         });

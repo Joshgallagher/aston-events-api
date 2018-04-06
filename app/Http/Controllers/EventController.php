@@ -80,6 +80,7 @@ class EventController extends Controller
         $this->authorize('update', $event);
 
         $event->update([
+            'related_event_id' => request('related_event_id', $event->related_event_id),
             'name' => request('name', $event->name),
             'description' => $request->input('description', $event->description),
             'location' => $request->input('location', $event->location),
