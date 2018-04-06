@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources\EventResource;
 use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 
 class EventController extends Controller
 {
@@ -68,13 +69,24 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param \App\Http\Requests\UpdateEventRequest $request
+     * @param \App\Models\Event                     $event
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEventRequest $request, Event $event)
     {
+        $this->authorize('update', $event);
+
+        $event->update([
+            'name' => request('name', $event->name),
+            'description' => $request->input('description', $event->description),
+            'location' => $request->input('location', $event->location),
+            'date' => $request->input('date', $event->date),
+            'time' => $request->input('time', $event->time),
+        ]);
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
