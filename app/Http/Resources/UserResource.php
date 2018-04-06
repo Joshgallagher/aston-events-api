@@ -14,12 +14,12 @@ class UserResource extends JsonResource
      *
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'name' => (string) $this->name,
             'email' => (string) $this->email,
-            'contact_number' => $this->when($this->contact_number, $this->formatContactNumber()),
+            'contact_number' => $this->when($this->contact_number, $this->getFormattedNumber()),
         ];
     }
 
@@ -28,7 +28,7 @@ class UserResource extends JsonResource
      *
      * @return \Propaganistas\LaravelPhone\PhoneNumber
      */
-    protected function formatContactNumber()
+    protected function getFormattedNumber(): PhoneNumber
     {
         return PhoneNumber::make($this->contact_number, 'GB');
     }

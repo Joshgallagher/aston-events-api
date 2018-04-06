@@ -13,7 +13,7 @@ class EventResource extends JsonResource
      *
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'organiser' => new UserResource($this->whenLoaded('organiser')),
