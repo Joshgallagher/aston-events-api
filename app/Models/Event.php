@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\IsFilterableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
@@ -56,6 +57,16 @@ class Event extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * An Event has one related Event.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function relatedEvent(): HasOne
+    {
+        return $this->hasOne(self::class, 'id', 'related_event_id');
     }
 
     /**

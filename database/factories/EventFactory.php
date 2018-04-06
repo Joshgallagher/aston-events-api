@@ -14,6 +14,7 @@ $factory->define(App\Models\Event::class, function (Faker $faker) {
         'user_id' => function () {
             return App\Models\User::all()->random()->id;
         },
+        'related_event_id' => null,
         'name' => $faker->sentence,
         'description' => $faker->paragraph,
         'location' => 'Aston Students\' Union',

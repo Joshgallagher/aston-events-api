@@ -18,6 +18,7 @@ class EventResource extends JsonResource
         return [
             'organiser' => new UserResource($this->whenLoaded('organiser')),
             'category' => new CategoryResource($this->whenLoaded('category')),
+            'related_event' => $this->when($this->related_event_id, new self($this->whenLoaded('relatedEvent'))),
             'name' => (string) $this->name,
             'slug' => (string) $this->slug,
             'description' => (string) $this->description,

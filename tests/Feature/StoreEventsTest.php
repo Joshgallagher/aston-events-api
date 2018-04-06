@@ -54,4 +54,27 @@ class StoreEventsTest extends ApiTestCase
 
         $this->assertDatabaseHas('events', $event->toArray());
     }
+
+    /** @test */
+    public function new_events_can_have_a_related_event()
+    {
+        $organiser = create('User', [
+            'contact_number' => '07387074668',
+        ]);
+        create('Category');
+        $relatedEvent = create('Event');
+        $event = make('Event', [
+            'related_event_id' => $relatedEvent->id,
+        ]);
+
+        $headers = $this->createAuthHeader($organiser);
+
+        $this->postJson('api/v1/events', $event->toArray(), $headers)
+            ->assertStatus(Response::HTTP_CREATED);
+
+        $this->assertDatabaseHas('events', [
+            'related_event_id' => null,
+            'related_event_id' => $relatedEvent->id,
+        ]);
+    }
 }

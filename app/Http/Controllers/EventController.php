@@ -44,6 +44,7 @@ class EventController extends Controller
         $event = Event::create([
             'category_id' => request('category_id'),
             'user_id' => auth()->id(),
+            'related_event_id' => request('related_event_id'),
             'name' => request('name'),
             'description' => request('description'),
             'location' => request('location'),
@@ -51,7 +52,7 @@ class EventController extends Controller
             'time' => request('time'),
         ]);
 
-        return new EventResource($event->load('organiser', 'category'));
+        return new EventResource($event->load('organiser', 'category', 'relatedEvent'));
     }
 
     /**
@@ -63,7 +64,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return new EventResource($event->load('organiser', 'category'));
+        return new EventResource($event->load('organiser', 'category', 'relatedEvent'));
     }
 
     /**

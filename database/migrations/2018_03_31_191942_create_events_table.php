@@ -15,6 +15,7 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('related_event_id')->nullable();
             $table->string('name');
             $table->string('slug')->unique()->nullable();
             $table->text('description');
@@ -25,6 +26,7 @@ class CreateEventsTable extends Migration
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('related_event_id')->references('id')->on('events');
         });
     }
 

@@ -25,6 +25,7 @@ class StoreEventRequest extends FormRequest
     {
         return [
             'category_id' => 'required|numeric',
+            'related_event_id' => 'nullable|exists:events,id|numeric',
             'name' => 'required|max:100|string',
             'description' => 'required|max:255|string',
             'location' => 'required|max:100|string',
@@ -41,6 +42,7 @@ class StoreEventRequest extends FormRequest
     public function messages()
     {
         return [
+            'related_event_id.exists' => 'The selected event does not exist.',
             'date.date_format' => 'The :attribute provided is invalid.',
             'time.date_format' => 'The :attribute provided is invalid.',
         ];
