@@ -39,6 +39,11 @@ class Event extends Model
         return 'slug';
     }
 
+    public function favorites()
+    {
+        return $this->morphMany(Favorite::class, 'favorited');
+    }
+
     /**
      * An Event belongs to an Organiser (User).
      *

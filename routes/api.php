@@ -32,6 +32,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/{event}', 'EventController@show');
         Route::patch('/{event}', 'EventController@update')->middleware('auth:api');
         Route::delete('/{event}', 'EventController@destroy')->middleware('auth:api');
+
+        Route::post('/{event}/favorites', 'FavoriteController@store')->middleware('auth:api');
     });
 
     Route::middleware('auth:api')->get('/user', function () {
