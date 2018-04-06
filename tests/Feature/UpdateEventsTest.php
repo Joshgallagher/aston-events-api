@@ -17,7 +17,7 @@ class UpdateEventsTest extends ApiTestCase
         create('Category');
         $event = create('Event');
 
-        $this->patchJson('api/v1/events/'.$event->id, [
+        $this->patchJson('api/v1/events/'.$event->slug, [
             'name' => 'I patched the name.',
             'description' => 'I patched the description.',
         ])->assertStatus(Response::HTTP_UNAUTHORIZED);
@@ -37,7 +37,7 @@ class UpdateEventsTest extends ApiTestCase
 
         $headers = $this->createAuthHeader($authOrganiser);
 
-        $this->patchJson('api/v1/events/'.$event->id, [
+        $this->patchJson('api/v1/events/'.$event->slug, [
             'name' => 'I patched the name.',
             'description' => 'I patched the description.',
         ], $headers)->assertStatus(Response::HTTP_FORBIDDEN);
@@ -57,7 +57,7 @@ class UpdateEventsTest extends ApiTestCase
 
         $headers = $this->createAuthHeader($authOrganiser);
 
-        $this->patchJson('api/v1/events/'.$event->id, [
+        $this->patchJson('api/v1/events/'.$event->slug, [
             'name' => 'I patched the name.',
             'description' => 'I patched the description.',
         ], $headers)->assertStatus(Response::HTTP_NO_CONTENT);

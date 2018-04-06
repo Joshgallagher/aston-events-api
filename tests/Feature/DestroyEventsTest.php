@@ -17,7 +17,7 @@ class DestroyEventsTest extends ApiTestCase
         create('Category');
         $event = create('Event');
 
-        $this->deleteJson('api/v1/events/'.$event->id)
+        $this->deleteJson('api/v1/events/'.$event->slug)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
 
         $this->assertDatabaseHas('events', $event->toArray());
@@ -32,7 +32,7 @@ class DestroyEventsTest extends ApiTestCase
 
         $headers = $this->createAuthHeader($authOrganiser);
 
-        $this->deleteJson('api/v1/events/'.$event->id, [], $headers)
+        $this->deleteJson('api/v1/events/'.$event->slug, [], $headers)
             ->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertDatabaseHas('events', $event->toArray());
@@ -47,7 +47,7 @@ class DestroyEventsTest extends ApiTestCase
 
         $headers = $this->createAuthHeader($authOrganiser);
 
-        $this->deleteJson('api/v1/events/'.$event->id, [], $headers)
+        $this->deleteJson('api/v1/events/'.$event->slug, [], $headers)
             ->assertStatus(Response::HTTP_NO_CONTENT);
 
         $this->assertDatabaseMissing('events', $event->toArray());

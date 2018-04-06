@@ -28,6 +28,16 @@ class Event extends Model
     }
 
     /**
+     * Get the route key name for Laravel.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /**
      * An Event belongs to an Organiser (User).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

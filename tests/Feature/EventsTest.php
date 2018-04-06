@@ -31,7 +31,7 @@ class EventsTest extends ApiTestCase
         create('Category');
         $event = create('Event');
 
-        $response = $this->getJson('api/v1/events/'.$event->id)
+        $response = $this->getJson('api/v1/events/'.$event->slug)
             ->assertJsonFragment([
                 'name' => $event->name,
             ])
