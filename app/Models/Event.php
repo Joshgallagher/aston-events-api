@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\FavourableTrait;
 use App\Filters\IsFilterableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -9,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
 {
-    use IsFilterableTrait;
+    use IsFilterableTrait, FavourableTrait;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -37,11 +39,6 @@ class Event extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
-    }
-
-    public function favorites()
-    {
-        return $this->morphMany(Favorite::class, 'favorited');
     }
 
     /**
@@ -72,30 +69,6 @@ class Event extends Model
     public function relatedEvent(): HasOne
     {
         return $this->hasOne(self::class, 'id', 'related_event_id');
-    }
-
-    /**
-     * An Event can be favorited.
-     *
-     * @return \App\Models\Favorite
-     */
-    public function favorite(): Favorite
-    {
-        $attributes = ['user_id' => auth()->id()];
-
-        if (!$this->favorites()->where($attributes)->exists()) {
-            return $this->favorites()->create($attributes);
-        }
-    }
-
-    public function isFavorited()
-    {
-        return $this->fsvorites()->where('user_id', auth()->id())->exists();
-    }
-
-    public function getFavoritesCountAttribute(): int
-    {
-        return $this->favorites->count();
     }
 
     /**
