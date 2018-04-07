@@ -22,4 +22,19 @@ class FavoritesTest extends ApiTestCase
 
         $this->assertCount(1, $event->favorites);
     }
+
+    /** @test */
+    public function an_authenticated_user_may_only_favorite_an_event_once()
+    {
+        $user = create('User');
+        create('Category');
+        $event = create('Event');
+
+        $authHeaders = $this->createAuthHeader($user);
+
+        $this->postJson("api/v1/events/{$event->slug}/favorites", [], $authHeaders);
+        $this->postJson("api/v1/events/{$event->slug}/favorites", [], $authHeaders);
+
+        $this->assertCount(1, $event->favorites);
+    }
 }
