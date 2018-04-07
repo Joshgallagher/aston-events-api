@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,11 +27,18 @@ class FavoriteController extends Controller
      */
     public function store(Event $event)
     {
-        DB::table('favorites')->insert([
-            'user_id' => auth()->id(),
-            'favorited_id' => $event->id,
-            'favorited_type' => get_class($event),
-        ]);
+        $event->favorite();
+
+        // Favorite::create([
+        //     'user_id' => auth()->id(),
+        //     'favorited_id' => $event->id,
+        //     'favorited_type' => get_class($event),
+        // ]);
+        // DB::table('favorites')->insert([
+        //     'user_id' => auth()->id(),
+        //     'favorited_id' => $event->id,
+        //     'favorited_type' => get_class($event),
+        // ]);
     }
 
     /**

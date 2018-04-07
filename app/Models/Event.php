@@ -74,6 +74,11 @@ class Event extends Model
         return $this->hasOne(self::class, 'id', 'related_event_id');
     }
 
+    public function favorite()
+    {
+        $this->favorites()->create(['user_id' => auth()->id()]);
+    }
+
     /**
      * Set the slug attribute.
      *
