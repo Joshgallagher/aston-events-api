@@ -18,10 +18,12 @@ class EventResource extends JsonResource
         return [
             'name' => (string) $this->name,
             'slug' => (string) $this->slug,
+            'favorites_count' => (int) $this->favoritesCount,
             'description' => (string) $this->description,
             'location' => (string) $this->location,
             'event_date' => (string) $this->date,
             'event_time' => (string) $this->time,
+            'is_favorited' => (bool) $this->isFavorited,
             'category' => new CategoryResource($this->whenLoaded('category')),
             'organiser' => new UserResource($this->whenLoaded('organiser')),
             'related_event' => $this->when($this->related_event_id, new self($this->whenLoaded('relatedEvent'))),
