@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\Favorite;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 class FavoriteController extends Controller
 {
@@ -21,7 +20,7 @@ class FavoriteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Event $event
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,16 +28,7 @@ class FavoriteController extends Controller
     {
         $event->favorite();
 
-        // Favorite::create([
-        //     'user_id' => auth()->id(),
-        //     'favorited_id' => $event->id,
-        //     'favorited_type' => get_class($event),
-        // ]);
-        // DB::table('favorites')->insert([
-        //     'user_id' => auth()->id(),
-        //     'favorited_id' => $event->id,
-        //     'favorited_type' => get_class($event),
-        // ]);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**

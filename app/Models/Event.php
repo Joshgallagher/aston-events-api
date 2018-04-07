@@ -74,7 +74,12 @@ class Event extends Model
         return $this->hasOne(self::class, 'id', 'related_event_id');
     }
 
-    public function favorite()
+    /**
+     * An Event can be favorited.
+     *
+     * @return \App\Models\Favorite
+     */
+    public function favorite(): Favorite
     {
         $attributes = ['user_id' => auth()->id()];
 
