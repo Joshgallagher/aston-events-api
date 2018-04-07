@@ -20,4 +20,18 @@ class FavoriteController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * Remove the Favorite resource from storage.
+     *
+     * @param \App\Models\Event $event
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Event $event)
+    {
+        $event->unfavorite();
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
 }

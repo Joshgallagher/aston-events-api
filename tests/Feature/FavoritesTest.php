@@ -24,7 +24,7 @@ class FavoritesTest extends ApiTestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_favorite_any_event()
+    public function an_authenticated_user_can_favorite_an_event()
     {
         $user = create('User');
         create('Category');
@@ -36,6 +36,24 @@ class FavoritesTest extends ApiTestCase
             ->assertStatus(Response::HTTP_NO_CONTENT);
 
         $this->assertCount(1, $event->favorites);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_unfavorite_an_event()
+    {
+        $user = create('User');
+        create('Category');
+        $event = create('Event');
+
+        $authHeaders = $this->createAuthHeader($user);
+
+        $this->postJson("api/v1/events/{$event->slug}/favorites", [], $authHeaders)
+            ->assertStatus(Response::HTTP_NO_CONTENT);
+        $this->assertCount(1, $event->favorites);
+
+        $this->deleteJson("api/v1/events/{$event->slug}/favorites", [], $authHeaders)
+            ->assertStatus(Response::HTTP_NO_CONTENT);
+        $this->assertCount(0, $event->fresh()->favorites);
     }
 
     /** @test */

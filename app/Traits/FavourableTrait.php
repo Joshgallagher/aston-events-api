@@ -32,6 +32,18 @@ trait FavourableTrait
     }
 
     /**
+     * A Model can be unfavorited.
+     *
+     * @return Model
+     */
+    public function unfavorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+
+        $this->favorites()->where($attributes)->get()->each->delete();
+    }
+
+    /**
      * Returns a boolean value indicating if the authenticated User
      * has favorited the give Model.
      *
@@ -39,7 +51,7 @@ trait FavourableTrait
      */
     public function getIsFavoritedAttribute(): bool
     {
-        return $this->fsvorites()->where('user_id', auth()->id())->exists();
+        return $this->favorites()->where('user_id', auth()->id())->exists();
     }
 
     /**
