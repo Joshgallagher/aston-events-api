@@ -44,7 +44,7 @@ trait FavourableTrait
     /**
      * A Model can be unfavorited.
      *
-     * @return Model
+     * @return mixed
      */
     public function unfavorite()
     {
