@@ -88,6 +88,16 @@ class Event extends Model
         }
     }
 
+    public function isFavorited()
+    {
+        return $this->fsvorites()->where('user_id', auth()->id())->exists();
+    }
+
+    public function getFavoritesCountAttribute(): int
+    {
+        return $this->favorites->count();
+    }
+
     /**
      * Set the slug attribute.
      *
