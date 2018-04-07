@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 trait FavourableTrait
 {
     /**
+     * Boot the trait.
+     */
+    protected static function bootFavourableTrait()
+    {
+        static::deleting(function ($model) {
+            $model->favorites->each->delete();
+        });
+    }
+
+    /**
      * A Model can have many Favorites.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
