@@ -12,7 +12,7 @@ class EventFilter extends AbstractFilter
      *
      * @var array
      */
-    protected $filters = ['my', 'today'];
+    protected $filters = ['my', 'today', 'popular'];
 
     /**
      * Return the authenticated users created Events.
@@ -32,5 +32,17 @@ class EventFilter extends AbstractFilter
     public function today(): Builder
     {
         return $this->builder->where('date', Carbon::today()->format('Y-m-d'));
+    }
+
+    /**
+     * Return the most favorited Events in descending order.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function popular(): Builder
+    {
+        $this->builder->getQuery()->orders = [];
+
+        return $this->builder->orderBy('favorites_count', 'desc');
     }
 }

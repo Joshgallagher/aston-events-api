@@ -61,7 +61,9 @@ trait FavourableTrait
      */
     public function getIsFavoritedAttribute(): bool
     {
-        return $this->favorites()->where('user_id', auth()->id())->exists();
+        $attributes = ['user_id' => auth()->id()];
+
+        return $this->favorites()->where($attributes)->exists();
     }
 
     /**

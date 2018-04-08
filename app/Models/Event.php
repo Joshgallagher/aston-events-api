@@ -26,6 +26,10 @@ class Event extends Model
     {
         parent::boot();
 
+        static::addGlobalScope('favoritesCount', function ($builder) {
+            $builder->withCount('favorites');
+        });
+
         static::created(function ($event) {
             $event->update(['slug' => $event->name]);
         });

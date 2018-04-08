@@ -81,4 +81,31 @@ class EventsTest extends ApiTestCase
             ])
             ->assertStatus(Response::HTTP_OK);
     }
+
+    /** @test */
+    public function users_can_filter_events_by_their_favorite_count()
+    {
+        create('User');
+        create('Category');
+        $secondEvent = create('Event');
+        create('Favorite', [
+            'favorited_id' => $secondEvent->id,
+        ], 3);
+        $firstEvent = create('Event');
+        create('Favorite', [
+            'favorited_id' => $firstEvent->id,
+        ], 5);
+        $thirdEvent = create('Event');
+        create('Favorite', [
+            'favorited_id' => $thirdEvent->id,
+        ], 1);
+
+        $this->getJson('api/v1/events?popular=1')
+            ->assertSeeTextInOrder([
+                $firstEvent->name,
+                $secondEvent->name,
+                $thirdEvent->name,
+            ])
+            ->assertStatus(Response::HTTP_OK);
+    }
 }
