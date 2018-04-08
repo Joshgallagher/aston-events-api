@@ -30,6 +30,18 @@ class EventTest extends TestCase
     }
 
     /** @test */
+    public function an_event_has_one_related_event()
+    {
+        create('User');
+        create('Category');
+        $event = create('Event', [
+            'related_event_id' => create('Event')->id,
+        ]);
+
+        $this->assertInstanceOf('App\Models\Event', $event->relatedEvent);
+    }
+
+    /** @test */
     public function an_events_slug_is_always_unique()
     {
         create('User');

@@ -29,6 +29,10 @@ class Event extends Model
         static::created(function ($event) {
             $event->update(['slug' => $event->name]);
         });
+
+        static::deleting(function ($event) {
+            $event->where('related_event_id', $event->id)->get()->each->update(['related_event_id' => null]);
+        });
     }
 
     /**

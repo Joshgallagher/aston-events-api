@@ -24,7 +24,16 @@ class UpdateEventRequest extends FormRequest
     public function rules()
     {
         return [
-            'related_event_id' => 'nullable|exists:events,id|numeric',
+            'related_event_id' => [
+                'nullable',
+                'exists:events,id',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if ($value === $this->event->id) {
+                        return $fail('An event can not be related to itself.');
+                    }
+                },
+            ],
             'name' => 'max:100|string',
             'description' => 'max:255|string',
             'location' => 'max:100|string',
