@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Traits;
 
+use App\Filters\AbstractFilter;
 use Illuminate\Database\Eloquent\Builder;
 
-trait IsFilterableTrait
+trait FilterableTrait
 {
     /**
      * Apply all relevant filters to the given Model.

@@ -10,7 +10,7 @@ trait FavourableTrait
     /**
      * Boot the trait.
      */
-    protected static function bootFavourableTrait()
+    protected static function bootFavourableTrait(): void
     {
         static::deleting(function ($model) {
             $model->favorites->each->delete();

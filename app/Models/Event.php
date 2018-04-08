@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Traits\FavourableTrait;
-use App\Filters\IsFilterableTrait;
+use App\Traits\FilterableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
 {
-    use IsFilterableTrait, FavourableTrait;
+    use FilterableTrait, FavourableTrait;
 
     /**
      * The attributes that aren't mass assignable.
