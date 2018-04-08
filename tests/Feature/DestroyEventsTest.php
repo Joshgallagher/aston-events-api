@@ -52,4 +52,22 @@ class DestroyEventsTest extends ApiTestCase
 
         $this->assertDatabaseMissing('events', $event->toArray());
     }
+
+    /** @test */
+    public function when_a_related_event_is_deleted_the_related_event_id_is_set_to_null_again()
+    {
+        $authOrganiser = create('User');
+        create('Category');
+        $relatedEvent = create('Event');
+        $event = create('Event', [
+            'related_event_id' => $relatedEvent->id,
+        ]);
+
+        $headers = $this->createAuthHeader($authOrganiser);
+
+        $this->deleteJson('api/v1/events/'.$relatedEvent->slug, [], $headers)
+            ->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $this->assertEquals($event->fresh()->related_event_id, null);
+    }
 }

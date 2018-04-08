@@ -82,12 +82,10 @@ class UpdateEventsTest extends ApiTestCase
 
         $headers = $this->createAuthHeader($authOrganiser);
 
-        dd($this->patchJson('api/v1/events/'.$event->slug, [
+        $this->patchJson('api/v1/events/'.$event->slug, [
             'related_event_id' => $event->id,
-        ], $headers)->getContent()); //->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        ], $headers)->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        tap($event->fresh(), function ($event) {
-            $this->assertNotEquals($event->id, $event->related_event_id);
-        });
+        $this->assertNotEquals($event->fresh()->id, $event->related_event_id);
     }
 }
