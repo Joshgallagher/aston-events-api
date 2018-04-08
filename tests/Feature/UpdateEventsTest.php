@@ -70,4 +70,24 @@ class UpdateEventsTest extends ApiTestCase
             $this->assertEquals('I patched the description.', $event->description);
         });
     }
+
+    /** @test */
+    public function an_updated_events_related_event_can_not_be_itself()
+    {
+        $authOrganiser = create('User');
+        create('Category');
+        $event = create('Event', [
+            'related_event_id' => create('Event')->id,
+        ]);
+
+        $headers = $this->createAuthHeader($authOrganiser);
+
+        $this->patchJson('api/v1/events/'.$event->slug, [
+            'related_event_id' => $event->id,
+        ], $headers); //->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        tap($event->fresh(), function ($event) {
+            $this->assertNotEquals($event->id, $event->related_event_id);
+        });
+    }
 }
