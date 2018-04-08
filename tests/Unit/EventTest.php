@@ -58,4 +58,19 @@ class EventTest extends TestCase
             'slug' => 'american-football-team-2',
         ]);
     }
+
+    /** @test */
+    public function events_related_event_id_is_set_to_null_when_related_event_is_deleted()
+    {
+        create('User');
+        create('Category');
+        $relatedEvent = create('Event');
+        $event = create('Event', [
+            'related_event_id' => $relatedEvent->id,
+        ]);
+
+        $relatedEvent->delete();
+
+        $this->assertNull($event->fresh()->related_event_id);
+    }
 }
