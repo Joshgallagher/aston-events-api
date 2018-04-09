@@ -41,7 +41,9 @@ class StoreEventsTest extends ApiTestCase
     /** @test */
     public function authenticated_organisers_can_create_events()
     {
-        $organiser = create('User');
+        $organiser = create('User', [
+            'confirmed' => true,
+        ]);
         create('Category');
         $event = make('Event');
 
@@ -56,7 +58,9 @@ class StoreEventsTest extends ApiTestCase
     /** @test */
     public function created_events_can_have_a_related_event()
     {
-        $organiser = create('User');
+        $organiser = create('User', [
+            'confirmed' => true,
+        ]);
         create('Category');
         $relatedEvent = create('Event');
         $event = make('Event', [
