@@ -24,6 +24,21 @@ class StoreEventsTest extends ApiTestCase
     }
 
     /** @test */
+    public function authenticated_organisers_must_first_confirm_their_email_address_before_creating_events()
+    {
+        $organiser = create('User');
+        create('Category');
+        $event = make('Event');
+
+        $headers = $this->createAuthHeader($organiser);
+
+        $this->postJson('api/v1/events', $event->toArray(), $headers)
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->assertDatabaseHas('events', $event->toArray());
+    }
+
+    /** @test */
     public function authenticated_organisers_can_create_events()
     {
         $organiser = create('User');
