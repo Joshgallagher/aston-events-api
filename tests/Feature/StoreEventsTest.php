@@ -24,26 +24,9 @@ class StoreEventsTest extends ApiTestCase
     }
 
     /** @test */
-    public function organisers_without_a_contact_number_can_not_create_events()
+    public function authenticated_organisers_can_create_events()
     {
         $organiser = create('User');
-        create('Category');
-        $event = make('Event');
-
-        $headers = $this->createAuthHeader($organiser);
-
-        $this->postJson('api/v1/events', $event->toArray(), $headers)
-            ->assertStatus(Response::HTTP_FORBIDDEN);
-
-        $this->assertDatabaseMissing('events', $event->toArray());
-    }
-
-    /** @test */
-    public function organisers_with_a_contact_number_can_create_events()
-    {
-        $organiser = create('User', [
-            'contact_number' => '07387074668',
-        ]);
         create('Category');
         $event = make('Event');
 
@@ -56,11 +39,9 @@ class StoreEventsTest extends ApiTestCase
     }
 
     /** @test */
-    public function new_events_can_have_a_related_event()
+    public function created_events_can_have_a_related_event()
     {
-        $organiser = create('User', [
-            'contact_number' => '07387074668',
-        ]);
+        $organiser = create('User');
         create('Category');
         $relatedEvent = create('Event');
         $event = make('Event', [
