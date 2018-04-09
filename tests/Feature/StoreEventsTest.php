@@ -35,7 +35,7 @@ class StoreEventsTest extends ApiTestCase
         $this->postJson('api/v1/events', $event->toArray(), $headers)
             ->assertStatus(Response::HTTP_FORBIDDEN);
 
-        $this->assertDatabaseHas('events', $event->toArray());
+        $this->assertDatabaseMissing('events', $event->toArray());
     }
 
     /** @test */

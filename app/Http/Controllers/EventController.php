@@ -39,7 +39,7 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        // $this->authorize('create', Event::class);
+        $this->authorize('create', Event::class);
 
         $event = Event::create([
             'category_id' => request('category_id'),
