@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'name' => (string) $this->name,
             'email' => (string) $this->email,
             'contact_number' => $this->when($this->contact_number, $this->getFormattedNumber()),
+            'confirmed' => (bool) $this->confirmed,
         ];
     }
 
