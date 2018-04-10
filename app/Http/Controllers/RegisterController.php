@@ -23,6 +23,7 @@ class RegisterController extends Controller
             'name' => request('name'),
             'email' => request('email'),
             'password' => Hash::make(request('password')),
+            'confirmation_token' => md5(request('email')).str_random(68),
         ]);
 
         event(new Registered($user));
