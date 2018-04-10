@@ -75,6 +75,6 @@ class AuthController extends Controller
                 'code' => $responseCode,
                 'message' => $message,
             ],
-        ]);
+        ], $responseCode);
     }
 }
