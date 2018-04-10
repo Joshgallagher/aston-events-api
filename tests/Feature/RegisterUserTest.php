@@ -92,6 +92,13 @@ class RegisterUserTest extends ApiTestCase
     }
 
     /** @test */
+    public function invalid_confirmation_tokens_are_rejected()
+    {
+        $this->postJson('api/v1/register/confirm', ['token' => 'invalid'])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /** @test */
     public function upon_successful_registration_a_valid_token_is_returned()
     {
         $user = make('User', [
