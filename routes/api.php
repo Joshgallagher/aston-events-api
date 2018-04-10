@@ -16,7 +16,7 @@ use App\Http\Resources\UserResource;
 Route::prefix('v1')->group(function () {
     Route::prefix('register')->group(function () {
         Route::post('/', 'RegisterController@store');
-        Route::get('/confirm', 'EmailConfirmationController@index');
+        Route::post('/confirm', 'EmailConfirmationController@index');
     });
 
     Route::prefix('auth')->group(function () {

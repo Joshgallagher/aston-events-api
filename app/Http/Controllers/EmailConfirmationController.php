@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class EmailConfirmationController extends Controller
 {
@@ -14,9 +15,16 @@ class EmailConfirmationController extends Controller
      */
     public function index()
     {
-        User::where('confirmation_token', request('token'))
-            ->firstOrFail()
-            ->confirm();
+        if (!$user = User::where('confirmation_token', request('token'))->first()) {
+            return response()->json([
+                'errors' => [
+                    'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'message' => 'The confirmation token is invalid.',
+                ],
+            ]);
+        }
+
+        $user->confirm();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
