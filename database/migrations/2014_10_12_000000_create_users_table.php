@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('contact_number')->nullable();
             $table->string('password');
             $table->boolean('confirmed')->default(false);
-            $table->string('confirmation_token')->unique();
+            $table->string('confirmation_token')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
         });
