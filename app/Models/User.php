@@ -27,6 +27,15 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
+     * The attributes that should be casted to another type.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'confirmed' => 'boolean',
+    ];
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
@@ -44,5 +53,30 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    /**
+     * Create an email confirmation token from the User's email and random string.
+     *
+     * @param string $email
+     *
+     * @return string
+     */
+    public function createConfirmationToken(string $email): string
+    {
+        return md5($email).str_random(68);
+    }
+
+    /**
+     * Confirm that the User's email is correct.
+     *
+     * @return bool
+     */
+    public function confirm(): bool
+    {
+        $this->confirmed = true;
+        $this->confirmation_token = null;
+
+        $this->save();
     }
 }

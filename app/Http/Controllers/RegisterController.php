@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Facades\App\Models\User;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use App\Http\Requests\RegisterUserRequest;
 
 class RegisterController extends Controller
@@ -20,9 +21,12 @@ class RegisterController extends Controller
     {
         $user = User::create([
             'name' => request('name'),
-            'email' => request('email'),
+            'email' => $email = request('email'),
             'password' => Hash::make(request('password')),
+            'confirmation_token' => User::createConfirmationToken($email),
         ]);
+
+        event(new Registered($user));
 
         $accessToken = auth()->attempt(request(['email', 'password']));
         $expiresIn = auth()->factory()->getTTL() * 60;

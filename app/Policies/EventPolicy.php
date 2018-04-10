@@ -31,7 +31,7 @@ class EventPolicy
      */
     public function create(User $user)
     {
-        return (bool) $user->contact_number;
+        return $user->confirmed;
     }
 
     /**

@@ -2,8 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Tests\ApiTestCase;
 use Illuminate\Http\Response;
+use App\Mail\EmailConfirmation;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class RegisterUserTest extends ApiTestCase
@@ -44,6 +48,54 @@ class RegisterUserTest extends ApiTestCase
 
         $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
             ->assertStatus(Response::HTTP_CREATED);
+    }
+
+    /** @test */
+    public function a_confirmation_email_is_sent_upon_registration()
+    {
+        Mail::fake();
+
+        $user = create('User', [
+            'email' => 'josh@aston.ac.uk',
+        ]);
+
+        event(new Registered($user));
+
+        Mail::assertSent(EmailConfirmation::class);
+    }
+
+    /** @test */
+    public function users_can_confirm_their_email_addresses()
+    {
+        Mail::fake();
+
+        $user = make('User', [
+            'email' => 'josh@aston.ac.uk',
+        ]);
+
+        $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
+            ->assertStatus(Response::HTTP_CREATED);
+
+        $newUser = User::whereEmail('josh@aston.ac.uk')->first();
+
+        $this->assertFalse($newUser->confirmed);
+        $this->assertNotNull($newUser->confirmation_token);
+
+        $this->postJson('api/v1/register/confirm', [
+            'token' => $newUser->confirmation_token,
+        ]);
+
+        tap($newUser->fresh(), function ($newUser) {
+            $this->assertTrue($newUser->confirmed);
+            $this->assertNull($newUser->confirmation_token);
+        });
+    }
+
+    /** @test */
+    public function invalid_confirmation_tokens_are_rejected()
+    {
+        $this->postJson('api/v1/register/confirm', ['token' => 'invalid'])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */

@@ -24,7 +24,7 @@ class StoreEventsTest extends ApiTestCase
     }
 
     /** @test */
-    public function organisers_without_a_contact_number_can_not_create_events()
+    public function authenticated_organisers_must_first_confirm_their_email_address_before_creating_events()
     {
         $organiser = create('User');
         create('Category');
@@ -39,10 +39,10 @@ class StoreEventsTest extends ApiTestCase
     }
 
     /** @test */
-    public function organisers_with_a_contact_number_can_create_events()
+    public function authenticated_organisers_can_create_events()
     {
         $organiser = create('User', [
-            'contact_number' => '07387074668',
+            'confirmed' => true,
         ]);
         create('Category');
         $event = make('Event');
@@ -56,10 +56,10 @@ class StoreEventsTest extends ApiTestCase
     }
 
     /** @test */
-    public function new_events_can_have_a_related_event()
+    public function created_events_can_have_a_related_event()
     {
         $organiser = create('User', [
-            'contact_number' => '07387074668',
+            'confirmed' => true,
         ]);
         create('Category');
         $relatedEvent = create('Event');
