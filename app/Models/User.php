@@ -49,4 +49,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function confirm()
+    {
+        $this->confirmed = true;
+
+        $this->save();
+    }
 }

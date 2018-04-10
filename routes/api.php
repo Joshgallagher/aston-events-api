@@ -14,7 +14,10 @@ use App\Http\Resources\UserResource;
 */
 
 Route::prefix('v1')->group(function () {
-    Route::post('/register', 'RegisterController@store');
+    Route::prefix('register')->group(function () {
+        Route::post('/', 'RegisterController@store');
+        Route::get('/confirm', 'EmailConfirmationController@index');
+    });
 
     Route::prefix('auth')->group(function () {
         Route::post('/token', 'AuthController@issueToken');
