@@ -67,6 +67,8 @@ class RegisterUserTest extends ApiTestCase
     /** @test */
     public function users_can_confirm_their_email_addresses()
     {
+        Mail::fake();
+
         $user = make('User', [
             'email' => 'josh@aston.ac.uk',
         ]);

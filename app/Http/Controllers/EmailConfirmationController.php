@@ -17,6 +17,8 @@ class EmailConfirmationController extends Controller
         User::where('confirmation_token', request('token'))
             ->firstOrFail()
             ->confirm();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
