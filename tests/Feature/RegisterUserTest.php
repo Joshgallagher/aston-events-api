@@ -83,7 +83,10 @@ class RegisterUserTest extends ApiTestCase
 
         $this->getJson('api/v1/register/confirm?token='.$newUser->confirmation_token);
 
-        $this->assertTrue($newUser->fresh()->confirmed);
+        tap($newUser->fresh(), function ($newUser) {
+            $this->assertTrue($newUser->confirmed);
+            $this->assertNull($newUser->confirmation_token);
+        });
     }
 
     /** @test */

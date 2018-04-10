@@ -50,9 +50,15 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function createConfirmationToken(string $email): string
+    {
+        return md5($email).str_random(68);
+    }
+
     public function confirm()
     {
         $this->confirmed = true;
+        $this->confirmation_token = null;
 
         $this->save();
     }

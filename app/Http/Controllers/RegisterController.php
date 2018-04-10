@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Facades\App\Models\User;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -21,9 +21,9 @@ class RegisterController extends Controller
     {
         $user = User::create([
             'name' => request('name'),
-            'email' => request('email'),
+            'email' => $email = request('email'),
             'password' => Hash::make(request('password')),
-            'confirmation_token' => md5(request('email')).str_random(68),
+            'confirmation_token' => User::createConfirmationToken($email),
         ]);
 
         event(new Registered($user));
