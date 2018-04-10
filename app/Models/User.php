@@ -26,6 +26,10 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    protected $casts = [
+        'confirmed' => 'boolean',
+    ];
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
