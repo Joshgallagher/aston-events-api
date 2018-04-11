@@ -59,7 +59,7 @@ trait FavourableTrait
      *
      * @return bool
      */
-    public function getIsFavoritedAttribute(): bool
+    public function getFavoritedAttribute(): bool
     {
         $attributes = ['user_id' => auth()->id()];
 
