@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use App\Traits\FavourableTrait;
 use App\Traits\FilterableTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Event extends Model
 {
-    use FilterableTrait, FavourableTrait;
+    use FilterableTrait, FavourableTrait, Searchable;
 
     /**
      * The attributes that aren't mass assignable.
