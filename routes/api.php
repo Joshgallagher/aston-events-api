@@ -24,6 +24,10 @@ Route::prefix('v1')->group(function () {
         Route::post('/token/revoke', 'AuthController@revokeToken')->middleware('auth:api');
     });
 
+    Route::prefix('search')->group(function () {
+        Route::get('/', 'SearchController@show');
+    });
+
     Route::prefix('categories')->group(function () {
         Route::get('/', 'CategoryController@index');
         Route::get('/{category}', 'CategoryEventController@index');
