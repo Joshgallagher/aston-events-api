@@ -51,6 +51,20 @@ class Event extends Model
     }
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'location' => $this->location,
+            'category_name' => $this->category->name,
+        ];
+    }
+
+    /**
      * An Event belongs to an Organiser (User).
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
