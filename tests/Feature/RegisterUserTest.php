@@ -19,6 +19,7 @@ class RegisterUserTest extends ApiTestCase
     {
         $user = make('User', [
             'email' => 'josh@aston.ac.uk',
+            'contact_number' => '07387074668',
         ]);
 
         $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
@@ -32,6 +33,7 @@ class RegisterUserTest extends ApiTestCase
     {
         $user = make('User', [
             'email' => 'josh@gmail.com',
+            'contact_number' => '07387074668',
         ]);
 
         $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
@@ -57,6 +59,7 @@ class RegisterUserTest extends ApiTestCase
 
         $user = create('User', [
             'email' => 'josh@aston.ac.uk',
+            'contact_number' => '07387074668',
         ]);
 
         event(new Registered($user));
@@ -71,6 +74,7 @@ class RegisterUserTest extends ApiTestCase
 
         $user = make('User', [
             'email' => 'josh@aston.ac.uk',
+            'contact_number' => '07387074668',
         ]);
 
         $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))
@@ -103,6 +107,7 @@ class RegisterUserTest extends ApiTestCase
     {
         $user = make('User', [
             'email' => 'josh@aston.ac.uk',
+            'contact_number' => '07387074668',
         ]);
 
         $response = $this->postJson('api/v1/register', array_merge($user->toArray(), ['password' => 'secret']))

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use Propaganistas\LaravelPhone\PhoneNumber;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
@@ -78,5 +79,17 @@ class User extends Authenticatable implements JWTSubject
         $this->confirmation_token = null;
 
         $this->save();
+    }
+
+    /**
+     * Format the contact number column to a valid GB phone number.
+     *
+     * @param string $value
+     *
+     * @return \Propaganistas\LaravelPhone\PhoneNumber
+     */
+    public function getContactNumberAttribute($value): PhoneNumber
+    {
+        return PhoneNumber::make($value, 'GB');
     }
 }

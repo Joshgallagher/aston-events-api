@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Propaganistas\LaravelPhone\PhoneNumber;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -19,18 +18,8 @@ class UserResource extends JsonResource
         return [
             'name' => (string) $this->name,
             'email' => (string) $this->email,
-            'contact_number' => $this->when($this->contact_number, $this->getFormattedNumber()),
+            'contact_number' => (string) $this->contact_number,
             'confirmed' => (bool) $this->confirmed,
         ];
-    }
-
-    /**
-     * Format the given contact number to the GB standard.
-     *
-     * @return \Propaganistas\LaravelPhone\PhoneNumber
-     */
-    protected function getFormattedNumber(): PhoneNumber
-    {
-        return PhoneNumber::make($this->contact_number, 'GB');
     }
 }
