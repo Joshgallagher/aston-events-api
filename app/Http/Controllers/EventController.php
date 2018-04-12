@@ -13,8 +13,7 @@ use App\Http\Requests\UpdateEventRequest;
 class EventController extends Controller
 {
     /**
-     * Display a listing of the Event resource. Optionally, a User can
-     * filter the listing through query params.
+     * Display a listing of the Event resource.
      *
      * @param \App\Filters\EventFilter $filters
      *
@@ -35,7 +34,7 @@ class EventController extends Controller
      *
      * @param \App\Http\Requests\StoreEventRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\EventResource
      */
     public function store(StoreEventRequest $request)
     {
