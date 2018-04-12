@@ -108,4 +108,35 @@ class EventsTest extends ApiTestCase
             ])
             ->assertStatus(Response::HTTP_OK);
     }
+
+    /** @test */
+    public function an_authenticated_user_can_see_all_their_favorited_events()
+    {
+        $user = create('User');
+        create('Category');
+
+        $firstEvent = create('Event');
+        create('Favorite', [
+            'user_id' => $user->id,
+            'favorited_id' => $firstEvent->id,
+        ]);
+        $secondEvent = create('Event');
+        create('Favorite', [
+            'user_id' => $user->id,
+            'favorited_id' => $secondEvent->id,
+        ]);
+
+        create('Favorite', [
+            'favorited_id' => create('Event')->id,
+        ], 2);
+        create('Favorite', [
+            'favorited_id' => create('Event')->id,
+        ]);
+
+        $headers = $this->createAuthHeader($user);
+
+        $results = $this->getJson('api/v1/events?favorited=1', $headers)->json()['data'];
+
+        $this->assertCount(2, $results);
+    }
 }
