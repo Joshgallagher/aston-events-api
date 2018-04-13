@@ -64,7 +64,7 @@ class RegisterUserTest extends ApiTestCase
 
         event(new Registered($user));
 
-        Mail::assertSent(EmailConfirmation::class);
+        Mail::assertQueued(EmailConfirmation::class);
     }
 
     /** @test */
