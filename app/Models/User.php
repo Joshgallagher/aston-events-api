@@ -70,10 +70,8 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Confirm that the User's email is correct.
-     *
-     * @return bool
      */
-    public function confirm(): bool
+    public function confirm()
     {
         $this->confirmed = true;
         $this->confirmation_token = null;

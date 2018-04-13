@@ -18,6 +18,10 @@ class SearchTest extends TestCase
      */
     public function a_user_can_search_for_events()
     {
+        if (!config('scout.algolia.id')) {
+            $this->markTestSkipped('Algolia is not configured.');
+        }
+
         config(['scout.driver' => 'algolia']);
 
         $searchTerm = 'foobar';
@@ -30,13 +34,9 @@ class SearchTest extends TestCase
         ], 2);
 
         do {
-            sleep(.25);
+            sleep(1); // Account for the latency.
 
-            try {
-                $results = $this->getJson("api/v1/search?query={$searchTerm}")->json()['data'];
-            } catch (\Exception $e) {
-                $this->fail('This test may have failed due to latency issues between the Algolia service or because no Algolia credentials where provided in the .env file. Please check this test file for more information.');
-            }
+            $results = $this->getJson("api/v1/search?query={$searchTerm}")->json()['data'];
         } while (empty($results));
 
         $this->assertCount(2, $results);
