@@ -6,12 +6,14 @@ use Laravel\Scout\Searchable;
 use App\Traits\FavourableTrait;
 use App\Traits\FilterableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Event extends Model
+class Event extends Model implements HasMedia
 {
-    use FilterableTrait, FavourableTrait, Searchable;
+    use FilterableTrait, FavourableTrait, HasMediaTrait, Searchable;
 
     /**
      * The attributes that aren't mass assignable.
