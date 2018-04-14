@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Spatie\MediaLibrary\Models\Media;
 
 class EventMediaController extends Controller
@@ -22,11 +23,13 @@ class EventMediaController extends Controller
         $requestImage = request('image');
         $requestImageName = md5($requestImage->getClientOriginalName().microtime());
         $requestImageExtension = $requestImage->getClientOriginalExtension();
-        $uniqueImageName = "{$requestImageName}.{$requestImageExtension}";
 
         $event->addMediaFromRequest('image')
-            ->usingFileName($uniqueImageName)
+            ->usingName($requestImageName)
+            ->usingFileName($requestImageName.'.'.$requestImageExtension)
             ->toMediaCollection();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -41,5 +44,7 @@ class EventMediaController extends Controller
         $this->authorize('delete', $media->model);
 
         $media->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

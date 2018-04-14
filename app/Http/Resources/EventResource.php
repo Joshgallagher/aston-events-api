@@ -27,6 +27,7 @@ class EventResource extends JsonResource
             'category' => new CategoryResource($this->whenLoaded('category')),
             'organiser' => new UserResource($this->whenLoaded('organiser')),
             'related_event' => $this->when($this->related_event_id, new self($this->whenLoaded('relatedEvent'))),
+            'media' => $this->when($this->media, MediaResource::collection($this->media)),
         ];
     }
 }
