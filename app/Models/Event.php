@@ -58,7 +58,7 @@ class Event extends Model implements HasMedia
      *
      * @param Media|null $media
      *
-     * @return [type] [description]
+     * @return mixed
      */
     public function registerMediaConversions(Media $media = null)
     {
