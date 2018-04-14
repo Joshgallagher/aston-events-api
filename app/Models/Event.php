@@ -5,6 +5,8 @@ namespace App\Models;
 use Laravel\Scout\Searchable;
 use App\Traits\FavourableTrait;
 use App\Traits\FilterableTrait;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -50,6 +52,15 @@ class Event extends Model implements HasMedia
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('media')
+            ->fit(Manipulations::FIT_MAX, 1080, 1080)
+            ->withResponsiveImages()
+            ->optimize()
+            ->queued();
     }
 
     /**

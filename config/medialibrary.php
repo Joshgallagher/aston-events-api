@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * The disk on which to store added files and derived images by default. Choose
      * one or more of the disks you've configured in config/filesystems.php.
@@ -47,7 +46,6 @@ return [
     ],
 
     'responsive_images' => [
-
         /*
         * This class is responsible for calculating the target widths of the responsive
         * images. By default we optimize for filesize and create variations that each are 20%

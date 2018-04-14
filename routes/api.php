@@ -42,6 +42,9 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/{event}/favorites', 'FavoriteController@store')->middleware('auth:api');
         Route::delete('/{event}/favorites', 'FavoriteController@destroy')->middleware('auth:api');
+
+        Route::post('/{event}/media', 'EventMediaController@store')->middleware('auth:api');
+        Route::delete('/media/{media}', 'EventMediaController@destroy')->middleware('auth:api');
     });
 
     Route::middleware('auth:api')->get('/user', function () {
