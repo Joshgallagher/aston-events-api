@@ -57,7 +57,7 @@ class Event extends Model implements HasMedia
     /**
      * Conversions that are applied to uploaded media.
      *
-     * @param Media|null $media
+     * @param \Spatie\MediaLibrary\Models\Media|null $media
      *
      * @return mixed
      */
