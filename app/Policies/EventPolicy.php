@@ -11,18 +11,6 @@ class EventPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the event.
-     *
-     * @param \App\Models\User  $user
-     * @param \App\Models\Event $event
-     *
-     * @return mixed
-     */
-    public function view(User $user, Event $event)
-    {
-    }
-
-    /**
      * Determine whether the user can create events.
      *
      * @param \App\Models\User $user

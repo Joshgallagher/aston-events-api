@@ -11,7 +11,7 @@ class SendEmailConfirmation
     /**
      * Handle the event.
      *
-     * @param Registered $event
+     * @param \Illuminate\Auth\Events\Registered $event
      */
     public function handle(Registered $event)
     {

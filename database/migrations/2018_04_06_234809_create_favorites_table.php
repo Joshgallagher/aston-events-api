@@ -20,7 +20,8 @@ class CreateFavoritesTable extends Migration
 
             $table->unique(['user_id', 'favorited_id', 'favorited_type']);
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')
+                ->references('id')->on('users');
         });
     }
 
