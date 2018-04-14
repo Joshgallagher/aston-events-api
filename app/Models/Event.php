@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Laravel\Scout\Searchable;
 use App\Traits\FavourableTrait;
 use App\Traits\FilterableTrait;
@@ -79,6 +80,8 @@ class Event extends Model implements HasMedia
             'name' => (string) $this->name,
             'location' => (string) $this->location,
             'favorites_count' => (int) $this->favorites_count,
+            'unix_time' => (int) Carbon::parse($this->time)->timestamp,
+            'unix_date' => (int) Carbon::parse($this->date)->timestamp,
             'category_name' => (string) $this->category->name,
         ];
     }
