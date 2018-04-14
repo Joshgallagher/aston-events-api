@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Tests\ApiTestCase;
 use Illuminate\Http\Response;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CategoriesTest extends ApiTestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /** @test */
     public function a_listing_of_all_categories_is_available()
@@ -71,7 +72,7 @@ class CategoriesTest extends ApiTestCase
     /** @test */
     public function users_can_filter_events_in_their_category_by_their_date()
     {
-        $today = \Carbon\Carbon::today();
+        $today = Carbon::today();
 
         create('User');
         $category = create('Category', [
@@ -79,7 +80,7 @@ class CategoriesTest extends ApiTestCase
         ]);
         $firstEventToday = create('Event', ['date' => $today->format('Y-m-d')]);
         $secondEventToday = create('Event', ['date' => $today->addHour(1)->format('Y-m-d')]);
-        $eventTomorrow = create('Event', ['date' => \Carbon\Carbon::tomorrow()->format('Y-m-d')]);
+        $eventTomorrow = create('Event', ['date' => Carbon::tomorrow()->format('Y-m-d')]);
 
         $this->getJson("api/v1/categories/{$category->slug}?today=1")
             ->assertJsonFragment([

@@ -8,11 +8,11 @@ use Illuminate\Http\Response;
 use App\Mail\EmailConfirmation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterUserTest extends ApiTestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /** @test */
     public function users_need_an_aston_email_to_register()

@@ -4,11 +4,11 @@ namespace Tests\Feature;
 
 use Tests\ApiTestCase;
 use Illuminate\Http\Response;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class FavoritesTest extends ApiTestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /** @test */
     public function guests_can_not_favorite_an_event()

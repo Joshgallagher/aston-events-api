@@ -34,13 +34,13 @@ class SearchTest extends TestCase
         ], 2);
 
         do {
-            sleep(1); // Account for the latency.
+            sleep(1); // Account for the latency of Algolia.
 
             $results = $this->getJson("api/v1/search?query={$searchTerm}")->json()['data'];
         } while (empty($results));
 
         $this->assertCount(2, $results);
 
-        Event::latest()->take(4)->unsearchable();
+        Event::latest()->take(4)->unsearchable(); // Remove events pushed to teh Algolia index.
     }
 }
