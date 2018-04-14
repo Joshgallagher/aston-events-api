@@ -6,36 +6,39 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\MediaLibrary\Models\Media;
+use App\Http\Requests\StoreEventMediaRequest;
 
 class EventMediaController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Media resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StoreEventMediaRequest $request
+     * @param \App\Models\Event                         $event
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Event $event)
+    public function store(StoreEventMediaRequest $request, Event $event)
     {
         $this->authorize('update', $event);
 
-        $requestImage = request('image');
-        $requestImageName = md5($requestImage->getClientOriginalName().microtime());
-        $requestImageExtension = $requestImage->getClientOriginalExtension();
+        $image = request('image');
+        $imageOriginalName = $image->getClientOriginalName();
+        $imageOriginalExtension = ".{$image->getClientOriginalExtension()}";
+        $hashName = md5($imageOriginalName.microtime());
 
         $event->addMediaFromRequest('image')
-            ->usingName($requestImageName)
-            ->usingFileName($requestImageName.'.'.$requestImageExtension)
+            ->usingName($hashName)
+            ->usingFileName($hashName.$imageOriginalExtension)
             ->toMediaCollection();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Media resource from storage.
      *
-     * @param int $id
+     * @param \Spatie\MediaLibrary\Models\Media $media
      *
      * @return \Illuminate\Http\Response
      */

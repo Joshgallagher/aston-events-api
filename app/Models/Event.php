@@ -53,9 +53,16 @@ class Event extends Model implements HasMedia
         return 'slug';
     }
 
+    /**
+     * Conversions that are applied to uploaded media.
+     *
+     * @param Media|null $media
+     *
+     * @return [type] [description]
+     */
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('event-media')
+        $this->addMediaConversion('media')
             ->width(640)
             ->optimize()
             ->queued();
