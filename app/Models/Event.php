@@ -62,7 +62,7 @@ class Event extends Model implements HasMedia
      */
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('media')
+        $this->addMediaConversion('event-media')
             ->width(640)
             ->optimize()
             ->queued();
@@ -76,9 +76,10 @@ class Event extends Model implements HasMedia
     public function toSearchableArray(): array
     {
         return [
-            'name' => $this->name,
-            'location' => $this->location,
-            'category_name' => $this->category->name,
+            'name' => (string) $this->name,
+            'location' => (string) $this->location,
+            'favorites_count' => (int) $this->favorites_count,
+            'category_name' => (string) $this->category->name,
         ];
     }
 

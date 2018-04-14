@@ -51,7 +51,9 @@ class EventController extends Controller
             'time' => request('time'),
         ]);
 
-        return new EventResource($event->load('organiser', 'category', 'relatedEvent'));
+        return new EventResource(
+            $event->load('organiser', 'category', 'relatedEvent')
+        );
     }
 
     /**
@@ -63,7 +65,9 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return new EventResource($event->load('organiser', 'category', 'relatedEvent'));
+        return new EventResource(
+            $event->load('organiser', 'category', 'relatedEvent', 'relatedEvent.organiser', 'media')
+        );
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class RelatedEventResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,6 +19,7 @@ class CategoryResource extends JsonResource
             'id' => (int) $this->id,
             'name' => (string) $this->name,
             'slug' => (string) $this->slug,
+            'organiser' => new UserResource($this->whenLoaded('organiser')),
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MediaResource extends JsonResource
+class EventMediaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -13,11 +13,11 @@ class MediaResource extends JsonResource
      *
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'media_url' => $this->getUrl('media'),
+            'id' => (int) $this->id,
+            'media_url' => (string) $this->getUrl('event-media'),
         ];
     }
 }

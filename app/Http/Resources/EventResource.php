@@ -16,18 +16,19 @@ class EventResource extends JsonResource
     public function toArray($request): array
     {
         return [
+            'id' => (int) $this->id,
             'name' => (string) $this->name,
             'slug' => (string) $this->slug,
             'favorites_count' => (int) $this->favorites_count,
             'favorited' => (bool) $this->favorited,
             'description' => (string) $this->description,
             'location' => (string) $this->location,
-            'event_date' => (string) $this->date,
-            'event_time' => (string) $this->time,
+            'date' => (string) $this->date,
+            'time' => (string) $this->time,
             'category' => new CategoryResource($this->whenLoaded('category')),
             'organiser' => new UserResource($this->whenLoaded('organiser')),
-            'related_event' => $this->when($this->related_event_id, new self($this->whenLoaded('relatedEvent'))),
-            'media' => $this->when($this->media, MediaResource::collection($this->media)),
+            'related_event' => new RelatedEventResource($this->whenLoaded('relatedEvent')),
+            'media' => EventMediaResource::collection($this->whenLoaded('media')),
         ];
     }
 }
