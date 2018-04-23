@@ -19,7 +19,7 @@ class CategoryEventController extends Controller
     public function index(Category $category, EventFilter $filters)
     {
         $categoryEvents = $category->events()
-            ->with('category')
+            ->with('category', 'organiser')
             ->latest()
             ->filter($filters)
             ->paginate(10);
