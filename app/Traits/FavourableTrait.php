@@ -63,7 +63,7 @@ trait FavourableTrait
     {
         $attributes = ['user_id' => auth()->id()];
 
-        return $this->favorites()->where($attributes)->exists();
+        return $this->favorites->where('user_id', auth()->id())->count();
     }
 
     /**

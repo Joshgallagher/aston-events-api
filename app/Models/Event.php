@@ -25,6 +25,13 @@ class Event extends Model implements HasMedia
     protected $guarded = [];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['favorites'];
+
+    /**
      * Boot the model.
      */
     public static function boot(): void
