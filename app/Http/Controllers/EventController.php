@@ -21,10 +21,10 @@ class EventController extends Controller
      */
     public function index(EventFilter $filters)
     {
-        $events = Event::with('category', 'organiser')
-            ->latest()
-            ->filter($filters)
-            ->paginate(10);
+        $all = request('all');
+        $events = Event::with('category', 'organiser')->latest();
+
+        $all ? $events = $events->get() : $events = $events->filter($filters)->paginate(10);
 
         return EventResource::collection($events);
     }
