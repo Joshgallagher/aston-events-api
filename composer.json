@@ -11,6 +11,7 @@
         "laravel/framework": "5.6.*",
         "laravel/scout": "^4.0",
         "laravel/tinker": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "propaganistas/laravel-phone": "^4.0",
         "spatie/laravel-cors": "^1.2",
         "spatie/laravel-medialibrary": "^7.0.0",
