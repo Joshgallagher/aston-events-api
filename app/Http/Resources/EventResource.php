@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventResource extends JsonResource
@@ -21,7 +22,7 @@ class EventResource extends JsonResource
             'slug' => (string) $this->slug,
             'favorites_count' => (int) $this->favorites_count,
             'favorited' => (bool) $this->favorited,
-            'description' => (string) $this->description,
+            'description' => (string) Purify::clean($this->description),
             'location' => (string) $this->location,
             'date' => (string) $this->date,
             'time' => (string) $this->time,
