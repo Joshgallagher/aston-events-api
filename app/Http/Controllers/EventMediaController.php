@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\MediaLibrary\Models\Media;
+use App\Http\Resources\EventMediaResource;
 use App\Http\Requests\StoreEventMediaRequest;
 
 class EventMediaController extends Controller
@@ -27,12 +28,12 @@ class EventMediaController extends Controller
         $imageOriginalExtension = ".{$image->getClientOriginalExtension()}";
         $hashName = md5($imageOriginalName.microtime());
 
-        $event->addMediaFromRequest('image')
+        $media = $event->addMediaFromRequest('image')
             ->usingName($hashName)
             ->usingFileName($hashName.$imageOriginalExtension)
             ->toMediaCollection();
 
-        return response(null, Response::HTTP_NO_CONTENT);
+        return new EventMediaResource($media);
     }
 
     /**
