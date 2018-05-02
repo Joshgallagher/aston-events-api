@@ -35,7 +35,7 @@ class UpdateEventRequest extends FormRequest
                 },
             ],
             'name' => 'max:100|string',
-            'description' => 'max:255|string',
+            'description' => 'max:2500|string',
             'location' => 'max:100|string',
             'date' => 'date_format:Y-m-d|string',
             'time' => 'date_format:H:i:s|string',

@@ -27,7 +27,7 @@ class StoreEventRequest extends FormRequest
             'category_id' => 'required|numeric',
             'related_event_id' => 'nullable|exists:events,id|numeric',
             'name' => 'required|max:100|string',
-            'description' => 'required|max:255|string',
+            'description' => 'required|max:2500|string',
             'location' => 'required|max:100|string',
             'date' => 'required|date_format:Y-m-d|string',
             'time' => 'required|date_format:H:i:s|string',
