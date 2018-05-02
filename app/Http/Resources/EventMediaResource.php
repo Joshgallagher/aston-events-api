@@ -17,7 +17,9 @@ class EventMediaResource extends JsonResource
     {
         return [
             'id' => (int) $this->id,
+            'size' => (string) $this->size,
             'media_url' => (string) $this->getUrl('event-media'),
+            'mime_type' => (string) $this->mime_type,
         ];
     }
 }

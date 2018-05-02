@@ -85,11 +85,13 @@ class Event extends Model implements HasMedia
     {
         return [
             'name' => (string) $this->name,
+            'slug' => (string) $this->slug,
             'location' => (string) $this->location,
             'favorites_count' => (int) $this->favorites_count,
             'unix_time' => (int) Carbon::parse($this->time)->timestamp,
             'unix_date' => (int) Carbon::parse($this->date)->timestamp,
             'category_name' => (string) $this->category->name,
+            'category_slug' => (string) $this->category->slug,
         ];
     }
 
